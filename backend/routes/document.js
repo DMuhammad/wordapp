@@ -48,9 +48,10 @@ router.get("/generate/:id", async (req, res, next) => {
   const document = documents[0];
   const converted = htmlDocx.asBlob(document.document);
   const fileName = `${+new Date()}.docx`;
-  const documentPath = `${__dirname}/..files/${fileName}`;
+  const documentPath = `${__dirname}/../files/${fileName}`;
+  const convert = await converted.text();
   await new Promise((resolve, reject) => {
-    fs.writeFile(documentPath, converted, (err) => {
+    fs.writeFile(documentPath, convert, (err) => {
       if (err) {
         reject(err);
         return;
